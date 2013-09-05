@@ -1,0 +1,35 @@
+/* colors */
+
+
+$myOrange:            #f89406;
+$myBlueDark:          #304269;
+$myBlue:              #91BED4;
+$myBlueLight:         #D9E8F5;
+$myWhite:             #eee;
+$myGrayBlue: #686d76;
+
+$btnBackground:       #062b0b;
+$btnBackgroundHighlight:   lighten($btnBackground, 10%);
+$btnBorder:           #000000;
+
+$navbarLinkColorHover:  #eee;
+$navbarBackground: #062b0b;
+$navbarBackgroundHighlight: $navbarBackground;
+$bodyBackground: #2b8846;
+
+
+@import "bootstrap";
+
+body { padding-top: 60px; }
+
+
+.btn {
+  color: #686d76;
+  text-shadow: inherit
+}
+
+
+@import "bootstrap-responsive";
+
+
+

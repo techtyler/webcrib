@@ -1,0 +1,16 @@
+%h1 WebCrib Status
+
+%h4
+  = 'Number of Registered Players: ' + number_of_players
+
+%h4
+  = 'Number of Players Signed in: ' + number_of_sessions
+
+%h4
+  = 'Number of Games Played: ' + number_of_games
+
+%h4
+  = 'Number of Games Won by User: ' + number_of_wins
+
+%form{action:play_path}
+  %input.btn{type:'submit', value:'New Game'}

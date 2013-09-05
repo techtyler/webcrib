@@ -1,0 +1,23 @@
+.login-form{'max-width' => '400px'}
+  = simple_form_for @player do |f|
+    %h2.form-heading
+      Sign up
+
+    .control-group
+      .control-label= f.label :username
+      .controls= f.text_field :username
+    .control-group
+      .control-label= f.label :email
+      .controls= f.text_field :email
+    .control-group
+      .control-label= f.label :password
+      .controls= f.password_field :password
+    .control-group
+      .control-label= f.label :password_confirmation
+      .controls= f.password_field :password_confirmation
+
+    %input.btn.btn-primary{:type => 'submit', :value => 'Sign up'}
+
+
+
+
