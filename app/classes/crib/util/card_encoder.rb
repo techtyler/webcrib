@@ -28,9 +28,6 @@ module Crib
         else
           return Crib::Card.new(convert_string_to_number(string[0..1]), convert_string_to_suit(string[2]))
         end
-
-
-
       end
 
       def self.convert_card_to_string(card)

@@ -11,7 +11,7 @@ class SessionsController < ApplicationController
       return
     end
 
-    player = Player.find_by_email(params[:email])
+    player = CribPlayer.find_by_email(params[:email])
 
     if player && player.authenticate(params[:password])
       flash[:notice] = 'Logged in!'

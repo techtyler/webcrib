@@ -1,10 +1,10 @@
 class CribPlayersController < ApplicationController
   def new
-    @player = Player.new
+    @player = CribPlayer.new
   end
 
   def create
-    @player = Player.new(player_params)
+    @player = CribPlayer.new(player_params)
     if @player.save
       redirect_to root_url, :notice => 'Signed up!'
     else
@@ -14,6 +14,6 @@ class CribPlayersController < ApplicationController
   end
 
   def player_params
-    params.require(:player).permit(:email, :password, :password_confirmation)
+    params.require(:crib_player).permit(:username, :email, :password, :password_confirmation)
   end
 end

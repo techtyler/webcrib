@@ -1,0 +1,21 @@
+%button.btn.btn-navbar{:type => 'button', 'data-toggle' => 'collapse', 'data-target' => '.nav-collapse' }
+  %span.icon-bar
+  %span.icon-bar
+%a.brand{:href => "#"} WebCrib
+.nav-collapse.collapse
+  %ul.nav
+
+    %li{class: is_active?(root_path)}= link_to 'Home', root_path
+
+    %li{class:is_active?( page_path('about'))}= link_to 'About', page_path('about')
+
+
+    -#%li{class: is_active?(play_path)}= link_to 'Play Crib', play_path
+
+    - if !is_guest?
+      %li= link_to 'Log out', log_out_path
+      %li
+        %a!= "Logged in as " + "<strong>#{current_player.username}</strong>"
+    -else
+      %li{class:is_active?(sign_up_path)}= link_to 'Sign up', sign_up_path
+      %li{class:is_active?(log_in_path)}= link_to 'Log in', log_in_path

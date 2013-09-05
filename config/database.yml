@@ -19,8 +19,8 @@ development:
   encoding: unicode
   database: webcrib_development
   pool: 5
-  username: webcrib
-  password:
+  username: postgres
+  password: postgres
 
   # Connect on a TCP socket. Omitted by default since the client uses a
   # domain socket that doesn't need configuration. Windows does not have
@@ -54,7 +54,7 @@ test:
 production:
   adapter: postgresql
   encoding: unicode
-  database: webcrib_production
+  database: d2a4o2jpdqpr5e
   pool: 5
-  username: webcrib
-  password:
+  username: pvnmiwivgxbcdq
+  password: bZ1y40W1hrNTT2ykOowm84V7qB

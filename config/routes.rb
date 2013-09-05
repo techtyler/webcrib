@@ -1,4 +1,16 @@
 Webcrib::Application.routes.draw do
+
+  get 'log_out' => 'sessions#destroy', :as => 'log_out'
+  get 'log_in' => 'sessions#create', :as => 'log_in'
+  get 'sign_up' => 'crib_players#new', :as => 'sign_up'
+
+  get 'home' => 'status#show', :as => 'home'
+
+  root :to => 'status#show'
+
+  resources :crib_players
+  resources :sessions
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

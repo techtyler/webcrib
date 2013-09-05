@@ -5,18 +5,18 @@
 
     .control-group
       .control-label= f.label :username
-      .controls= f.text_field :username
+      .controls= f.text_field :username, style:'height: 25px'
     .control-group
       .control-label= f.label :email
-      .controls= f.text_field :email
+      .controls= f.text_field :email, style:'height: 25px'
     .control-group
       .control-label= f.label :password
-      .controls= f.password_field :password
+      .controls= f.password_field :password, style:'height: 25px'
     .control-group
       .control-label= f.label :password_confirmation
-      .controls= f.password_field :password_confirmation
+      .controls= f.password_field :password_confirmation, style:'height: 25px'
 
-    %input.btn.btn-primary{:type => 'submit', :value => 'Sign up'}
+    %input.btn{:type => 'submit', :value => 'Sign up'}
 
 
 

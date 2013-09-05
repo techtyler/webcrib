@@ -1,7 +1,7 @@
 module StatusHelper
 
   def number_of_players
-    '15,432'
+    CribPlayer.all.size.to_s
     #get size of players table
   end
 
@@ -11,7 +11,8 @@ module StatusHelper
   end
 
   def number_of_sessions
-    #get size of sessions table
+    #get size of active games table
+    #or subset of players that have been touched within the last 10min or something
     '654'
   end
 
