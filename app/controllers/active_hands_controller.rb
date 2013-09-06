@@ -2,10 +2,6 @@ class ActiveHandsController < ApplicationController
 
   def throw
 
-
-
-
-
     #locate ActiveHand model if it exists
     return if not retrieve_active_hand?
 
@@ -25,13 +21,9 @@ class ActiveHandsController < ApplicationController
       #hand.first_peg!(ai_hand.first)
     end
 
-
-    prepare_js_throw_vars
-    tmp = '12'
-
   end
 
-  def new
+  def new #not called for first hand, only for recurring hands in the game
 
     #reset state of ActiveHand model (erase all fields and whatnot)
     #shuffle deck and deal
@@ -44,7 +36,6 @@ class ActiveHandsController < ApplicationController
 
     @hand.new_hand!
     @hand.deal!
-
 
   end
 
@@ -95,7 +86,7 @@ class ActiveHandsController < ApplicationController
 
     @hand = ActiveHand.find(hand_id)
 
-    if !hand
+    if !@hand
       redirect_to play_path, notice: "Could not locate the hand with id: #{hand_id}"
       return false
     end
