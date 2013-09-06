@@ -1,0 +1,2 @@
+module ActiveHandsHelper
+end

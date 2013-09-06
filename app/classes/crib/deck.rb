@@ -28,7 +28,7 @@ module Crib
       begin
         cut_index = rand(32) + 4
         card = @cards[cut_index]
-      end while (hand1.contains(card) || hand2.contains(card))
+      end while (hand1.include?(card) || hand2.include?(card))
 
       return card
 

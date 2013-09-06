@@ -1,0 +1,31 @@
+.player-cards.ai{style:' min-height: 200px; min-width: 100%'}
+  .hand
+    - for i in 0..(active_hand.ai_hand.size-1)
+      .card{id: "ai_card_#{i}", style:'margin: 25px; float:left'}!= render_card_back(i, 150)
+
+  %label#ai-hand-score.hand-score
+
+#game-center.game-middle{style:'min-height: 200px; min-width: 100%'}
+
+  #cut_card{style:'min-height: 200px; min-width: 200px; float:left'}
+  -if !active_hand.dealer
+    %label#crib-hand-score.hand-score
+
+  #crib_hand{style:'float:right'}
+
+  -if active_hand.dealer
+    %label#crib-hand-score.hand-score
+
+.player-cards.user{style:'min-height: 200px; min-width: 100%'}
+  -if active_hand.workflow_state == 'dealt'
+    %form{id:'throw_form', style:'float:left; margin-left: 100px; margin-top: 15px', action: throw_path, 'data-remote' => true}
+      -for i in 1..6
+        %label.checkbox.inline{id: "lbl_#{i}"}
+          = i.to_s
+          = check_box_tag "cards[]", (i-1).to_s
+      %input.btn{type:'submit', style:'margin-left:50px', value:'Throw Cards'}
+  %label#player-hand-score.hand-score
+  .hand{style:'float:left'}
+    - for i in 0..(active_hand.player_hand.size-1)
+      .card{id: "p_card_#{i}", style:'margin: 25px; float:left'}!= render_whole_card(active_hand.player_hand[i], i, 150)
+

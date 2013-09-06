@@ -13,6 +13,7 @@
     -#%li{class: is_active?(play_path)}= link_to 'Play Crib', play_path
 
     - if !is_guest?
+      %li{class:is_active?(play_path)}= link_to 'Play Crib', play_path
       %li= link_to 'Log out', log_out_path
       %li
         %a!= "Logged in as " + "<strong>#{current_player.username}</strong>"

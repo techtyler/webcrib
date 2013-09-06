@@ -16,6 +16,7 @@ gem 'simple_form', '>= 3.0.0rc'
 gem 'haml-rails'
 gem 'high_voltage'
 gem 'bootstrap-sass'
+gem 'redis'
 
 group :production do
   gem 'thin'

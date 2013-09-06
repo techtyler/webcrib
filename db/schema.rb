@@ -11,7 +11,32 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130905005648) do
+ActiveRecord::Schema.define(version: 20130905183052) do
+
+  create_table "active_games", force: true do |t|
+    t.integer  "player_id"
+    t.integer  "p1_score"
+    t.integer  "p2_score"
+    t.integer  "num_hands"
+    t.string   "workflow_state"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "active_hands", force: true do |t|
+    t.integer  "player_id"
+    t.string   "p1_hand"
+    t.string   "p2_hand"
+    t.boolean  "dealer"
+    t.string   "crib_hand"
+    t.string   "peg_stack"
+    t.integer  "peg_sum"
+    t.integer  "active_game_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "workflow_state"
+    t.string   "cut_card"
+  end
 
   create_table "crib_players", force: true do |t|
     t.string   "username"

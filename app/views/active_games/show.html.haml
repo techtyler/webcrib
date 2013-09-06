@@ -1,0 +1,16 @@
+
+-#TODO 1. Create layout of game (where cards, deck, board, score are placed)
+-#TODO 2. Fill in layout with instance information (based on active_games[session_id]?)
+-#TODO 3. Add in state information (rendering different states of the game, etc)
+
+
+.game-board{style:'min-width:1000px; min-height:600px'}
+  .game-score{style:'text-align:center; min-width:100%; min-height:70px'}
+    .centered-score{style:'width:50%; margin: 0 auto'}
+      .ai-score{style:'float:left; margin-right: 20px; margin-left: 100px'}
+        %h3= "AI: #{@game.p2_score}"
+      .user-score
+        %h3= "#{current_player.email}: #{@game.p1_score}"
+
+
+  =render 'active_hands/show', :active_hand => @game.active_hand   #this renders without calling show in active_hands controller

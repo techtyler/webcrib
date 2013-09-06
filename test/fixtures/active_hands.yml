@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  player_id: 1
+  p1_hand: MyString
+  p2_hand: MyString
+  dealer: false
+  crib_hand: MyString
+  peg_stack: MyString
+  peg_sum: 1
+  active_game_id: 1
+
+two:
+  player_id: 1
+  p1_hand: MyString
+  p2_hand: MyString
+  dealer: false
+  crib_hand: MyString
+  peg_stack: MyString
+  peg_sum: 1
+  active_game_id: 1
