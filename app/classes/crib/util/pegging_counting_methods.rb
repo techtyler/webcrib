@@ -6,8 +6,12 @@ module Crib
       #stack is an array of ints
       def self.full_run_stack(stack)
 
-        sorted_stack = stack.sort
-        return (sorted_stack.last - sorted_stack.first == sorted_stack.size - 1)
+        sorted_stack = stack.sort { |a,b| a.number <=> b.number  }
+        sorted_stack.uniq! {|x| x.number }
+        if (stack.size != sorted_stack.size)
+          return false
+        end
+        return (sorted_stack.last.number - sorted_stack.first.number == sorted_stack.size - 1)
 
       end
 
@@ -76,7 +80,10 @@ module Crib
           score += 2
         end
 
+
+
         score += score_run(stack)
+
         score += score_pair(stack)
 
         return score

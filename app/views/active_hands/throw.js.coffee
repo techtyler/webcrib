@@ -1,35 +1,44 @@
 
-$('#throw_form').remove()
+#remove unnecessary throw form
+$('#throw-form').remove()
+#Show peg form
+$('#peg-form').css("display", "block")
 
-#render cut card
-$('#cut_card').html("<%= raw render_whole_card(@cut_card, 0, 200)  %>")
+##render cut card
+$('#cut-card').html("<%= raw render_whole_card(@hand.cut_card_decoded, '', 100)  %>")
 
+##remove cards from player and ai hand divs
+$('#ai_card_4').remove()
+$('#ai_card_5').remove()
+$('#user-hand').html("<%= raw render_hand(@hand.player_hand, false, 'p_card_', false)  %>")
 
-#display crib hand
+#Toggle span classes so that labels will line up correctly and cards aren't put below any others
+$('#user-hand').toggleClass('span7 span5')
+$('#user-crib').toggleClass('span4 span6')
+$('#ai-hand').toggleClass('span7 span5')
+$('#ai-crib').toggleClass('span4 span6')
 
-$('#crib_hand').append("<div class='card' style='margin: 10px; float:left'><%= raw render_whole_card(@crib_hand[0], 0, 150) %></div>")
-$('#crib_hand').append("<div class='card' style='margin: 10px; float:left'><%= raw render_whole_card(@crib_hand[1], 1, 150)  %></div>")
-$('#crib_hand').append("<div class='card' style='margin: 10px; float:left'><%= raw render_whole_card(@crib_hand[2], 2, 150)  %></div>")
-$('#crib_hand').append("<div class='card' style='margin: 10px; float:left'><%= raw render_whole_card(@crib_hand[3], 3, 150)  %></div>")
+$('#ai-score').html("AI: <%= @hand.active_game.p2_score %> ")
+$('#user-score').html("<%= @hand.active_game.p1_score %>")
 
-#remove cards from player and ai hand divs
-
-$('#ai_card_' + "<%= j @ai_throw1.to_s %>").remove()
-$('#ai_card_' + "<%= j @ai_throw2.to_s %>").remove()
-$('#p_card_' + "<%= j @p_throw1.to_s %>").remove()
-$('#p_card_' + "<%= j @p_throw2.to_s %>").remove()
-
-
-$('#ai-hand-score').html("<%= j @ai_hand_score %>")
-$('#player-hand-score').html("<%= j @player_hand_score %>")
-$('#crib-hand-score').html("<%= j @crib_hand_score %>")
-
-
-#refresh player scores (for cut and hand scores)
-#render count_hands
+$('#peg-sum').html("<%= @hand.peg_sum %>")
+$("#peg-stack").html("<%= raw render_peg_stack( @hand ) %>")
 
 
-#render peg form (eventually)
+#Setup function based on value of hand.dealer
+showDealer = (hand)->
+
+  if hand.hand.dealer
+    $("#user-crib").html("<%= raw render_crib_hand %>")
+    $("#peg-stack").html("<%= raw render_peg_stack( @hand ) %>")
+
+#    Remove card that AI pegged
+    $("#ai_card_3").remove()
+
+  else
+    $("#ai-crib").html("<%= raw render_crib_hand %>")
+
+gon.watch('hand', url: 'hand', showDealer )
 
 
 

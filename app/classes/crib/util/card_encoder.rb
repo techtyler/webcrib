@@ -2,6 +2,28 @@ module Crib
   module Util
     class CardEncoder
 
+      def self.decode_full_stack(stack)
+
+        cards = stack.split(/[:|]/)
+        card_stack = []
+        cards.each do |c|
+          card_stack << Crib::Util::CardEncoder.convert_string_to_card(c)
+        end
+        return card_stack
+
+      end
+
+      def self.decode_current_stack(stack)
+
+        if !(stack.include?('|'))
+          return decode_full_stack(stack)
+        end
+
+        last = stack.rindex('|')
+        return decode_full_stack(stack[(last + 1)..-1])
+
+      end
+
       def self.encode_hand(hand)
         cards = []
         hand.each do |c|
@@ -19,6 +41,7 @@ module Crib
         end
         return hand
       end
+
 
 
       def self.convert_string_to_card(string)

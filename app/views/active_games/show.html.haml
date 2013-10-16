@@ -3,14 +3,21 @@
 -#TODO 2. Fill in layout with instance information (based on active_games[session_id]?)
 -#TODO 3. Add in state information (rendering different states of the game, etc)
 
+.row
+  .gameboard.span12
+    -#I think i need to add in some basic hand data here. (Current User
 
-.game-board{style:'min-width:1000px; min-height:600px'}
-  .game-score{style:'text-align:center; min-width:100%; min-height:70px'}
-    .centered-score{style:'width:50%; margin: 0 auto'}
-      .ai-score{style:'float:left; margin-right: 20px; margin-left: 100px'}
-        %h3= "AI: #{@game.p2_score}"
-      .user-score
-        %h3= "#{current_player.email}: #{@game.p1_score}"
+    .span9
+      =render 'active_hands/show', :active_hand => @game.active_hand   #this renders without calling show in active_hands controller
 
+    .span3
+      .scores
+        %h3#ai-score= "AI: #{@game.p2_score}"
+        %h3#user-label= "#{current_player.email}:"
+        %h3#user-score= "#{@game.p1_score}"
 
-  =render 'active_hands/show', :active_hand => @game.active_hand   #this renders without calling show in active_hands controller
+      %form#new-game{action: new_game_path}
+        %input.btn{type:'submit', value: 'New Game'}
+
+      %form#new-hand{action: new_hand_path, style: (if @game.active_hand.workflow_state == 'hands_counted' then '' else 'display: none' end)}
+        %input.btn{type:'submit' , value: 'Next Hand'}

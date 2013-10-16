@@ -17,6 +17,7 @@ module Crib  #TODO: Move Card/Deck to a PlayingCards Module/Gem?
     end
 
     def value
+
       if @number > 10
         return 10
       end

@@ -6,9 +6,16 @@ module Crib
       def self.peg_card(cards, peg_stack, sum)
         return nil if (not cards) || cards.empty?
 
-        return cards[0] if cards.size == 1
 
-        sorted = cards.sort |a,b| a.number <=> b.number
+        if cards.size == 1
+          if cards.first.value + sum < 32
+            return cards.first
+          else
+            return -1
+          end
+        end
+
+        sorted = cards.sort {|a,b| a.number <=> b.number}
         if (sum + sorted.first.value > 31)
           return -1 #value for not being able to play
         end

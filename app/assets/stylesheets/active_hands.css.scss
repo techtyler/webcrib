@@ -1,3 +1,83 @@
 // Place all the styles related to the active_hands controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+
+.hand{
+  margin: 25px;
+  min-height: 150px;
+  float:left;
+
+  .card{
+    margin-right: 5px;
+    float:left
+  }
+  .crib-card{
+    margin-right: 5px;
+    margin-left: -40px;
+    float:left;
+  }
+}
+
+.score{
+  margin-left:10px;
+  margin-top:25px;
+  float:left;
+}
+
+
+.span12{
+  margin-left:0px;
+  min-height: 450px;
+
+  .span2#cut-card{
+    min-height: 100px;
+    margin-top: 60px;
+    margin-left: 20px;
+  }
+
+  .span1.peg-sum{
+    color: #eee;
+    font-size: 28px;
+    margin-top: 70px;
+    margin-left: 10px;
+   }
+
+  .span8#peg-stack{
+    min-height: 150px;
+    margin-top: 60px;
+  }
+}
+
+#decision-form{
+   min-height: 40px;
+
+  #throw-form {
+    margin-left: 25px;
+    margin-top: 30px;
+
+    .checkbox {
+      margin-right: 33px;
+    }
+
+    %input{
+      margin-left: 50px;
+    }
+
+  }
+
+  #peg-form{
+    float:left;
+    margin-top: 30px;
+
+    .checkbox{
+      margin-right:15px;
+    }
+
+    %input{
+      margin-left:50px;
+    }
+  }
+}
+
+

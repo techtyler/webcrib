@@ -24,13 +24,17 @@ module Crib
 
     def cut_deck(hand1, hand2)
 
-      initialize_deck
-      begin
-        cut_index = rand(32) + 4
-        card = @cards[cut_index]
-      end while (hand1.include?(card) || hand2.include?(card))
 
-      return card
+      initialize_deck
+      excluded_cards = hand1.dup
+      excluded_cards.concat(hand2.dup)
+
+      for tmp in excluded_cards do
+        @cards.delete_if{|x| x.number == tmp.number && x.suit == tmp.suit}
+      end
+
+      #TODO Validate sizing?
+      @cards[rand(32) + 4]
 
     end
 

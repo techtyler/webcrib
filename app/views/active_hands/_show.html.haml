@@ -1,31 +1,72 @@
-.player-cards.ai{style:' min-height: 200px; min-width: 100%'}
-  .hand
-    - for i in 0..(active_hand.ai_hand.size-1)
-      .card{id: "ai_card_#{i}", style:'margin: 25px; float:left'}!= render_card_back(i, 150)
+-# Already nested within a span9  (with 800 px height)
+-user_peg_size = 4
+-hand_state =  active_hand.workflow_state
+-dealer = active_hand.dealer
+- if hand_state == 'pegging'
+  - pegging = true
+  - player_peg, ai_peg = active_hand.peg_hands
+  - user_peg_size = player_peg.size
+-elsif hand_state == 'hands_counted'
+  - hands_counted = true
+-elsif hand_state == 'dealt'
+  -dealt = true
 
-  %label#ai-hand-score.hand-score
 
-#game-center.game-middle{style:'min-height: 200px; min-width: 100%'}
+.hand#ai-hand{class: (if dealt then 'span7' else 'span5' end) }
+  -if dealt
+    != render_hand(active_hand.ai_hand, true, 'ai_card_', false)
+  -elsif pegging
+    != render_hand(ai_peg, true, 'ai_card_', false)
+  -elsif hands_counted
+    != render_hand(active_hand.ai_hand, false, 'ai_card_', false)
 
-  #cut_card{style:'min-height: 200px; min-width: 200px; float:left'}
-  -if !active_hand.dealer
-    %label#crib-hand-score.hand-score
 
-  #crib_hand{style:'float:right'}
+.hand#ai-crib{class: (if dealt then 'span4' else 'span5' end)}
+  -if pegging and not dealer
+    != render_crib_hand
+  -elsif hands_counted and not dealer
+    != render_hand(active_hand.crib, false, 'ai_crib_', false)
 
-  -if active_hand.dealer
-    %label#crib-hand-score.hand-score
+.span12
+  .span2#cut-card
+    - if dealt
+      != render_card_back('deck', 0, 100)
+    - else
+      != render_whole_card(active_hand.cut_card_decoded, '', 100)
+  .span1.peg-sum
+    %h3#peg-sum
+      -if pegging
+        = active_hand.peg_sum
+  .span8#peg-stack
+    - if !dealt
+      != render_peg_stack(active_hand)
 
-.player-cards.user{style:'min-height: 200px; min-width: 100%'}
-  -if active_hand.workflow_state == 'dealt'
-    %form{id:'throw_form', style:'float:left; margin-left: 100px; margin-top: 15px', action: throw_path, 'data-remote' => true}
+.span12#decision-form
+  -if dealt
+    %form#throw-form{ action: throw_path, 'data-remote' => true }
       -for i in 1..6
-        %label.checkbox.inline{id: "lbl_#{i}"}
+        %label.checkbox.inline{id: "throw_lbl_#{i}"}
           = i.to_s
           = check_box_tag "cards[]", (i-1).to_s
-      %input.btn{type:'submit', style:'margin-left:50px', value:'Throw Cards'}
-  %label#player-hand-score.hand-score
-  .hand{style:'float:left'}
-    - for i in 0..(active_hand.player_hand.size-1)
-      .card{id: "p_card_#{i}", style:'margin: 25px; float:left'}!= render_whole_card(active_hand.player_hand[i], i, 150)
+      %input.btn{type:'submit', value:'Throw Cards'}
+
+  -if !hands_counted
+    %form#peg-form{style: if dealt then 'display:none;' else '' end, action: peg_path, 'data-remote' => true}
+      -for i in 1..user_peg_size
+        %label.checkbox.inline{id: "peg_lbl_#{i}"}
+          = i.to_s
+          = radio_button_tag "pegs[]", (i-1).to_s
+      %input.btn{type:'submit', value:'Peg Card'}
+
+.hand#user-hand{class: (if dealt then 'span7' else 'span5' end) }
+  -if !pegging
+    != render_hand(active_hand.player_hand,  false, 'p_card_', false)
+  -else
+    != render_hand(player_peg, false, 'p_card_', false )
+
+.hand#user-crib{class: (if dealt then 'span4' else 'span5' end)}
+  -if pegging &&  dealer
+    != render_crib_hand
+  -elsif hands_counted && active_hand.dealer
+    != render_hand(active_hand.crib, false, '', true)
 

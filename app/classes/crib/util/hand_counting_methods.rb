@@ -8,18 +8,15 @@ module Crib
 
       def self.flush(cards)
 
-        suit = cards[0].suit
+        suit = cards.first.suit
         is_flush = true
         for i in 1..cards.size - 2
           if (cards[i].suit != suit)
-            x = Card.new(4, 5)
-            x += 1
             is_flush = false
           end
         end
         if is_flush
-          if cards[cards.size-1].suit == suit
-
+          if cards.last.suit == suit
             return cards.size
           else
             return cards.size -1
@@ -49,7 +46,7 @@ module Crib
       end
 
       def self.knobs(cards)
-        cut_suit = cards[cards.size - 1].suit
+        cut_suit = cards.last.suit
         for i in 1..cards.size - 2
           if cards[i].number == 11 && cards[i].suit == cut_suit
             return 1
@@ -82,11 +79,11 @@ module Crib
           if (tmp_cards.size < 2)
             return 0, sum_count
           end
-          card_to_pull_next = cards.size-1
+          card_to_pull_next = cards.size-1 # -1?
         end
         score = 0
 
-        if (!tmp_cards.empty? && (15 - tmp_sum >= tmp_cards[0].value))
+        if (!tmp_cards.empty? && (15 - tmp_sum >= tmp_cards.first.value))
 
           #tmp_sum < 15 - lowest_card
           while(!tmp_cards.empty?)
@@ -118,7 +115,7 @@ module Crib
       def self.fifteens(cards)
 
         sum = HandCountingMethods.sum(cards)
-        sum_count = 1
+        operation_count = 1
         fifteen_count = 0
 
         if sum == 15
@@ -128,7 +125,7 @@ module Crib
           for i in 0..cards.size-1
 
             sum4 = sum - cards[i].value
-            sum_count += 1
+            operation_count += 1   #TODO Remove performance testing
             if sum4 == 15
               fifteen_count+=1
             elsif sum4 < 15
@@ -137,7 +134,7 @@ module Crib
               for j in (i+1)..cards.size-1
 
                 sum3 = sum4 - cards[j].value
-                sum_count += 1
+                operation_count += 1
                 if (sum3 == 15)
                   fifteen_count+=1
                 elsif sum3 < 15
@@ -145,7 +142,7 @@ module Crib
                 elsif sum3 - cards[j].value >= 15
                   for k in (j+1)..cards.size-1
                     sum2 = sum3 - cards[k].value
-                    sum_count += 1
+                    operation_count += 1
                     if (sum2 == 15)
                       fifteen_count+=1
                     elsif (sum2 < 15)
@@ -157,7 +154,7 @@ module Crib
             end
           end
         end
-        return fifteen_count * 2, sum_count
+        return fifteen_count * 2, operation_count
       end
 
       def self.pairs (dups)
@@ -211,9 +208,9 @@ module Crib
         else
 
           tmp_cards = cards.dup
-          tmp_cards.delete(cards[0])
+          tmp_cards.delete(cards.first)
           tmp_dups = dups.dup
-          tmp_dups.delete(cards[0].number)
+          tmp_dups.delete(cards.first.number)
 
           tmp_runs = HandCountingMethods.score_runs(tmp_cards, tmp_dups)
 

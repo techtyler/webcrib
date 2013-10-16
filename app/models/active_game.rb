@@ -27,5 +27,49 @@ class ActiveGame < ActiveRecord::Base
 
   end
 
+  #def initialized
+  #
+  #end
+  #
+  #def cards_dealt
+  #
+  #end
+  #
+  #def hand_complete
+  #  #TODO Load active_hand into Hand_Stats and save to DB
+  #  #Read num_hands and increase it by 1
+  #end
+  #
+  #def next_hand
+  #
+  #end
+
+  def add_player_points(amount)
+    add_points(:p1_score, amount)
+  end
+
+  def add_ai_points(amount)
+    add_points(:p2_score, amount)
+  end
+
+  private
+
+  def add_points(attribute, amount)
+    prev = read_attribute(attribute)
+    new = prev + amount
+    write_attribute(attribute, new)
+    save
+    if new > 120
+      return false
+    else
+      return true
+    end
+
+  end
+
+
+  #TODO: Try to add a listener on @p1_score and @p2_score and when they change, throw a GameOverException when someone breaks 120
+  # TODO: -- then the controller will catch the excpetion and render the GameOver prompt along with the last peg and counted hands (even if unnecessary aka win by peg)
+
 
 end

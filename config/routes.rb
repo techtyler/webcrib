@@ -1,12 +1,19 @@
 Webcrib::Application.routes.draw do
 
   get 'play' => 'active_games#show', :as => 'play'
+
   get 'log_out' => 'sessions#destroy', :as => 'log_out'
   get 'log_in' => 'sessions#create', :as => 'log_in'
   get 'sign_up' => 'crib_players#new', :as => 'sign_up'
 
   get 'throw' => 'active_hands#throw', :as => 'throw'
-  get 'new_hand' => 'active_hands#new', :as => 'new_hand'
+
+  get 'peg' => 'active_hands#peg', :as => 'peg'
+  get 'hand' => 'active_hands#hand', :as => 'hand'
+
+  get 'new_game' => 'active_games#new_game', :as => 'new_game'
+  get 'new_hand' => 'active_games#new_hand', :as => 'new_hand'
+
 
   get 'home' => 'status#show', :as => 'home'
 
