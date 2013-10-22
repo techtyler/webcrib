@@ -66,6 +66,11 @@ class ActiveHandsController < ApplicationController
 
     process_ai_round
 
+    if @player_can_play_round
+      return
+    end
+
+
     if !@player_can_play && @ai_can_play
       #AI has already played this round, and since the user cant play anymore, the AI needs to play the rest of his cards
       play_rest_of_ai_hand
@@ -108,6 +113,11 @@ class ActiveHandsController < ApplicationController
         @ai_can_play_round = can_play_round?(@sum, @ai_peg)   #Check to see if Ai can continue to go, if so, keep processing his plays
 
       end
+    end
+
+    #if the AI played and ended a round, then let him score a point and reset the model!
+    if @ai_played > 0 && !@player_can_play_round
+      end_peg_round
     end
 
   end
