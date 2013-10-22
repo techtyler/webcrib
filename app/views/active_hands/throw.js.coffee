@@ -5,12 +5,12 @@ $('#throw-form').remove()
 $('#peg-form').css("display", "block")
 
 ##render cut card
-$('#cut-card').html("<%= raw render_whole_card(@hand.cut_card_decoded, '', 100)  %>")
+$('#cut-card').html("<%= raw render_whole_card(@hand.cut_card_decoded, '', 100, '')  %>")
 
 ##remove cards from player and ai hand divs
 $('#ai_card_4').remove()
 $('#ai_card_5').remove()
-$('#user-hand').html("<%= raw render_hand(@hand.player_hand, false, 'p_card_', false)  %>")
+$('#user-hand').html("<%= raw render_hand(@hand.player_hand, false, 'p_card_', '')  %>")
 
 #Toggle span classes so that labels will line up correctly and cards aren't put below any others
 $('#user-hand').toggleClass('span7 span5')
@@ -23,6 +23,8 @@ $('#user-score').html("<%= @hand.active_game.p1_score %>")
 
 $('#peg-sum').html("<%= @hand.peg_sum %>")
 $("#peg-stack").html("<%= raw render_peg_stack( @hand ) %>")
+
+
 
 
 #Setup function based on value of hand.dealer

@@ -2,6 +2,22 @@ module Crib
   module Util
     class CardEncoder
 
+      def self.decode_stack_by_round(stack)
+        if !(stack.include?('|'))
+          return [decode_full_stack(stack)]
+        end
+
+        rounds = stack.split(/[|]/)
+        r_stack = []
+
+        for i in 0..rounds.size-1
+          r_stack[i] = decode_hand(rounds[i])
+        end
+
+        return r_stack
+
+      end
+
       def self.decode_full_stack(stack)
 
         cards = stack.split(/[:|]/)

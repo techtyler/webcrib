@@ -8,15 +8,36 @@
   min-height: 150px;
   float:left;
 
-  .card{
-    margin-right: 5px;
-    float:left
-  }
+
   .crib-card{
     margin-right: 5px;
     margin-left: -40px;
     float:left;
   }
+}
+.card{
+  margin-right: 5px;
+  float:left
+}
+
+.stack {
+  float:left;
+}
+
+.player-stack{
+  margin-top: 20px;
+}
+
+.ai-stack{
+  margin-top: -20px;
+}
+.round{
+  margin-left: 50px;
+}
+
+.stack-card{
+  margin-right: -35px;
+
 }
 
 .score{

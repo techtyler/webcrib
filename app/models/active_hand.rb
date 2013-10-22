@@ -43,6 +43,10 @@ class ActiveHand < ActiveRecord::Base
     return Crib::Util::CardEncoder.decode_full_stack(read_attribute(:peg_stack))
   end
 
+  def stack_by_round
+    return Crib::Util::CardEncoder.decode_stack_by_round(read_attribute(:peg_stack))
+  end
+
   def current_peg_stack
     return Crib::Util::CardEncoder.decode_current_stack(read_attribute(:peg_stack))
   end
@@ -51,8 +55,11 @@ class ActiveHand < ActiveRecord::Base
     return peg_hands[1]
   end
 
-  def reset_peg_sum
+  def peg_round_complete
 
+    stack = read_attribute(:peg_stack)
+    stack += '|'
+    write_attribute(:peg_stack, stack)
     write_attribute(:peg_sum, 0)
     save
 
@@ -107,15 +114,13 @@ class ActiveHand < ActiveRecord::Base
 
   end
 
-  def card_pegged(card)
+  def card_pegged(card)  #TODO: To determine classes, could we just embed the 'who' into the db? (EG: 2 hearts by User = '1-22' or by AI = '2-22')
 
     stack = read_attribute(:peg_stack)
     sum = read_attribute(:peg_sum)
 
-    if stack.empty?
+    if current_peg_stack.empty?
       delimiter = '' #dont need a separator for first card
-    elsif sum == 0
-      delimiter = '|'
     else
       delimiter = ':'
     end

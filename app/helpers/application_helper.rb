@@ -7,12 +7,12 @@ module ApplicationHelper
     'active' if current_page?(page)
   end
 
-  def render_whole_card(card, id, height)
-    render_card(card, id, height, false)
+  def render_whole_card(card, id, height, clazz)
+    render_card(card, id, height, clazz)
   end
 
   def render_card_back(id, height, crib)
-    render_card(nil, id, height, crib)
+    render_card(nil, id, height, (if crib then 'crib' else '' end))
   end
 
   def render_peg_sum(active_hand)
@@ -26,30 +26,61 @@ module ApplicationHelper
 
   def render_peg_stack(active_hand)
 
-    val = ''
-    stack = active_hand.full_peg_stack
-    for i in 1..stack.size
-      val = val + render_whole_card(stack[i-1], 'peg_card_' + i.to_s, @@stack_height)
+    rounds = active_hand.stack_by_round #todo: for choosing class based on who pegged the card, check vs.ai_hand, .player_hand
+
+    player_hand = active_hand.player_hand
+
+    for i in 0..rounds.size-1
+      for j in 0..rounds[i].size-1
+        tmp_card = rounds[i][j]
+        rounds[i][j] = [tmp_card, player_hand.index{|x| x.number == tmp_card.number && x.suit == tmp_card.suit}]
+      end
+    end
+
+
+    val = "<div class='stack'>" + render_stack_round(rounds.delete_at(0), 'stack_rnd_1', 'stack-card') + '</div>'
+
+    while rounds.any?
+      clazz =  if (rounds.size == 1) then 'current-round stack-card' else 'stack-card' end
+      id = if (rounds.size == 1) then 'stack_rnd_c_' else 'stack_rnd_2' end
+      val += "<div class='stack round' >" + render_stack_round(rounds.delete_at(0), id, clazz ) + '</div>'
     end
 
     return val
 
-    #TODO Determine how to 'shade' cards not included in the sum
   end
+
+
+
+  def render_stack_round(round_with_player, id, clazz)
+    val = ''
+    for i in 0..round_with_player.size-1
+      card, player = round_with_player[i]
+      tmp_clazz = if player then 'player-stack ' else 'ai-stack ' end
+      tmp_clazz += clazz
+
+      val += render_whole_card(card, id + i.to_s, @@card_height, tmp_clazz)
+    end
+
+    return val
+
+
+  end
+
 
   def render_crib_hand
-    render_hand(1..4, true, 'crib', true)
+    render_hand(1..4, true, 'crib', 'crib')
   end
 
 
-  def render_hand(hand, back, id_prefix, crib)
+  def render_hand(hand, back, id_prefix, clazz)
     val = ''
     (0..hand.size-1).each { |i|
       id = id_prefix + i.to_s
       if back
-        val = val + render_card_back(id, @@card_height, crib)
+        val = val + render_card_back(id, @@card_height, clazz)
       else
-        val = val + render_whole_card(hand[i], id, @@card_height)
+        val = val + render_whole_card(hand[i], id, @@card_height, clazz)
       end
 
     }
@@ -59,7 +90,7 @@ module ApplicationHelper
 
 
   private
-  def render_card(card, id, height, crib)
+  def render_card(card, id, height, clazz)
 
     if !card
       filename = 'svg/cards/Blue_Back.svg'
@@ -67,8 +98,7 @@ module ApplicationHelper
       filename = 'svg/cards/' + Crib::Util::CardEncoder.convert_card_to_string(card)  + '.svg'
     end
 
-    return "<embed class='" + (if crib then 'crib-' else '' end) +
-        "card' id='#{id}' style='height: #{height}px;' src=" + url_to_asset(filename) + '/>'
+    return "<div class='" + clazz + " card' id='#{id}' ><embed style='height: #{height}px;' src=" + url_to_asset(filename) + '/></div>'
 
   end
 

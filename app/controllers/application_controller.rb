@@ -15,7 +15,7 @@ class ApplicationController < ActionController::Base
 
   def current_player
 
-    @current_player ||= (CribPlayer.find(session[:player_id]) if session[:player_id])
+    @current_player ||= (CribPlayer.find(session[:player_id]) if session[:player_id] )
 
   end
 

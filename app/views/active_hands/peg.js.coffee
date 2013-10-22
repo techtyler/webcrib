@@ -14,24 +14,24 @@ procPegging = (hand)->
 
     $('#new-hand').css("display", "block")
     $('#peg-form').remove()
-    $('#user-hand').html("<%= raw render_hand(@hand.player_hand, false, 'p_card_', false)  %>")
+    $('#user-hand').html("<%= raw render_hand(@hand.player_hand, false, 'p_card_', '')  %>")
     $('#user-hand').append("<h3 class='score'><%= @player_hand_score %></h3>")
 
-    $('#ai-hand').html("<%= raw render_hand(@hand.ai_hand, false, 'ai_card_', false) %>")
+    $('#ai-hand').html("<%= raw render_hand(@hand.ai_hand, false, 'ai_card_', '') %>")
     $('#ai-hand').append("<h3 class='score'><%= @ai_hand_score %></h3>")
 
     if hand.hand.dealer
-      $('#user-crib').html("<%= raw render_hand(@hand.crib, false, '', true) %>")
+      $('#user-crib').html("<%= raw render_hand(@hand.crib, false, '', 'crib') %>")
       $('#user-crib').append("<h3 class='score'><%= @player_crib_score %></h3>")
     else
-      $('#ai-crib').html("<%= raw render_hand(@hand.crib, false, '', true) %>")
+      $('#ai-crib').html("<%= raw render_hand(@hand.crib, false, '', 'crib')%>")
       $('#ai-crib').append("<h3 class='score'><%= @ai_crib_score %></h3>")
   else
     #Update Peg Form and Hand
 
     $("#peg_lbl_<%= @player_peg.size + 1 %>").remove()
     $("#p_card_<%= @peg_index %>").remove()
-    $('#user-hand').html("<%= raw render_hand(@player_peg, false, 'p_card_', false) %>")
-    $('#ai-hand').html("<%= raw render_hand(@ai_peg, true, 'ai_card_', false ) %>")
+    $('#user-hand').html("<%= raw render_hand(@player_peg, false, 'p_card_', '') %>")
+    $('#ai-hand').html("<%= raw render_hand(@ai_peg, true, 'ai_card_', '')%>")
 
 gon.watch('hand', url: 'hand', procPegging )

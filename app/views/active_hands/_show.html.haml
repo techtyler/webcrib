@@ -14,25 +14,25 @@
 
 .hand#ai-hand{class: (if dealt then 'span7' else 'span5' end) }
   -if dealt
-    != render_hand(active_hand.ai_hand, true, 'ai_card_', false)
+    != render_hand(active_hand.ai_hand, true, 'ai_card_', '')
   -elsif pegging
-    != render_hand(ai_peg, true, 'ai_card_', false)
+    != render_hand(ai_peg, true, 'ai_card_', '')
   -elsif hands_counted
-    != render_hand(active_hand.ai_hand, false, 'ai_card_', false)
+    != render_hand(active_hand.ai_hand, false, 'ai_card_', '')
 
 
 .hand#ai-crib{class: (if dealt then 'span4' else 'span5' end)}
   -if pegging and not dealer
     != render_crib_hand
   -elsif hands_counted and not dealer
-    != render_hand(active_hand.crib, false, 'ai_crib_', false)
+    != render_hand(active_hand.crib, false, 'ai_crib_', '')
 
 .span12
   .span2#cut-card
     - if dealt
       != render_card_back('deck', 0, 100)
     - else
-      != render_whole_card(active_hand.cut_card_decoded, '', 100)
+      != render_whole_card(active_hand.cut_card_decoded, '', 100, '')
   .span1.peg-sum
     %h3#peg-sum
       -if pegging
@@ -60,13 +60,13 @@
 
 .hand#user-hand{class: (if dealt then 'span7' else 'span5' end) }
   -if !pegging
-    != render_hand(active_hand.player_hand,  false, 'p_card_', false)
+    != render_hand(active_hand.player_hand,  false, 'p_card_', '')
   -else
-    != render_hand(player_peg, false, 'p_card_', false )
+    != render_hand(player_peg, false, 'p_card_', '' )
 
 .hand#user-crib{class: (if dealt then 'span4' else 'span5' end)}
   -if pegging &&  dealer
     != render_crib_hand
   -elsif hands_counted && active_hand.dealer
-    != render_hand(active_hand.crib, false, '', true)
+    != render_hand(active_hand.crib, false, '', 'crib')
 

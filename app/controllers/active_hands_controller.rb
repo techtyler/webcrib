@@ -1,6 +1,6 @@
 class ActiveHandsController < ApplicationController
 
-  #vars that can be taken out of instance
+  #vars that can be taken out of instance (for heavy class warning)
   # @peg_stack, @ai_played, @peg_card, 4 can_play_(round) vars ???? @sum, @peg_index, ...
 
   def hand
@@ -41,9 +41,7 @@ class ActiveHandsController < ApplicationController
     #make sure form is valid
     @peg_index = params[:pegs].first.to_i
 
-    unless @peg_index
-      return false #, 'Please select a card to peg.'
-    end
+    return false unless @peg_index
 
     #initialize temporary/view variables
     @sum = @hand.peg_sum
@@ -67,12 +65,6 @@ class ActiveHandsController < ApplicationController
     check_if_player_ended_round
 
     process_ai_round
-
-    if @player_can_play_round
-      return
-    else
-      end_peg_round
-    end
 
     if !@player_can_play && @ai_can_play
       #AI has already played this round, and since the user cant play anymore, the AI needs to play the rest of his cards
@@ -171,8 +163,8 @@ class ActiveHandsController < ApplicationController
 
   def end_peg_round
 
-    if @sum !=31
-      if @ai_played
+    if @sum != 31 && @sum != 15
+      if @ai_played && @ai_played > 0
         unless @hand.active_game.add_ai_points(1)
           @game_over = true
         end
@@ -185,13 +177,12 @@ class ActiveHandsController < ApplicationController
 
     @sum = 0
     @peg_stack = []
-    @hand.reset_peg_sum
+    @hand.peg_round_complete
 
   end
 
   def end_pegging
 
-    end_peg_round
     @player_hand_score = Crib::Util::HandCountingMethods.score_hand(@hand.player_hand.dup << @hand.cut_card_decoded, false)[0]
     @ai_hand_score = Crib::Util::HandCountingMethods.score_hand(@hand.ai_hand.dup << @hand.cut_card_decoded, false)[0]
     @player_crib_score = 0
@@ -222,7 +213,7 @@ class ActiveHandsController < ApplicationController
   end
 
   def can_play_round?(sum, hand)
-    return hand.first.number + sum < 32
+    return hand.first.value + sum < 32
   end
 
   def read_throw_choice?
@@ -271,9 +262,9 @@ class ActiveHandsController < ApplicationController
   end
 
   def cut_card_and_score(player_hand, ai_hand)
-    #cut deck (award points if jack, only load active_game if scoring is needed?)
+    #cut deck
     @cut_card = Crib::Deck.new.cut_deck(player_hand, ai_hand) #TODO Change this to user cut?  (might have to save deck state for a bit)
-
+    #(award points if jack)
     if @cut_card.number == 11
       if @hand.dealer?
         unless @hand.active_game.add_player_points(2)
@@ -294,7 +285,7 @@ class ActiveHandsController < ApplicationController
 
     hand_id = session[:hand_id]
     unless hand_id
-      redirect_to play_path, notice: 'Invalid hand id!'
+      redirect_to play_path, notice: 'Invalid hand id!' # Should only be false if game somehow not created with a hand or loses it
       return false
     end
 

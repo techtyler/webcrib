@@ -10,16 +10,16 @@ module Crib
 
         suit = cards.first.suit
         is_flush = true
-        for i in 1..cards.size - 2
+        (1..cards.size-2).each { |i|
           if (cards[i].suit != suit)
             is_flush = false
           end
-        end
+        }
         if is_flush
           if cards.last.suit == suit
             return cards.size
           else
-            return cards.size -1
+            return (-1 + cards.size)
           end
         end
         return 0
@@ -28,7 +28,7 @@ module Crib
       def self.remove_duplicate_cards(cards)
         dups = {}
         tmp_cards = cards.dup
-        for i in 0..cards.size-2
+        (0..cards.size-2).each { |i|
 
           if (cards[i].number == cards[i+1].number)
             if (dups.key?(cards[i].number))
@@ -41,17 +41,17 @@ module Crib
 
           end
 
-        end
+        }
         return tmp_cards,dups
       end
 
       def self.knobs(cards)
         cut_suit = cards.last.suit
-        for i in 1..cards.size - 2
+        (1..cards.size - 2).each { |i|
           if cards[i].number == 11 && cards[i].suit == cut_suit
             return 1
           end
-        end
+        }
         return 0
       end
 
@@ -122,16 +122,16 @@ module Crib
           fifteen_count = 1
         elsif sum > 15
 
-          for i in 0..cards.size-1
+          (0..cards.size-1).each { |i|
 
             sum4 = sum - cards[i].value
-            operation_count += 1   #TODO Remove performance testing
+            operation_count += 1 #TODO Remove performance testing
             if sum4 == 15
               fifteen_count+=1
             elsif sum4 < 15
               break
             else
-              for j in (i+1)..cards.size-1
+              ((i+1)..cards.size-1).each { |j|
 
                 sum3 = sum4 - cards[j].value
                 operation_count += 1
@@ -140,7 +140,7 @@ module Crib
                 elsif sum3 < 15
                   break
                 elsif sum3 - cards[j].value >= 15
-                  for k in (j+1)..cards.size-1
+                  ((j+1)..cards.size-1).each { |k|
                     sum2 = sum3 - cards[k].value
                     operation_count += 1
                     if (sum2 == 15)
@@ -148,11 +148,11 @@ module Crib
                     elsif (sum2 < 15)
                       break
                     end
-                  end
+                  }
                 end
-              end
+              }
             end
-          end
+          }
         end
         return fifteen_count * 2, operation_count
       end
@@ -176,11 +176,11 @@ module Crib
 
       def self.do_cards_make_complete_run(cards)
         run = cards.size
-        for i in 1..cards.size-1
+        (1..cards.size-1).each { |i|
           if (cards[i].number - cards[i-1].number != 1)
             run = 0
           end
-        end
+        }
         run
       end
 

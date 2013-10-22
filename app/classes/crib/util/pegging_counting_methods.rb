@@ -82,9 +82,9 @@ module Crib
 
 
 
-        score += score_run(stack)
+        score += score_run(stack.dup)
 
-        score += score_pair(stack)
+        score += score_pair(stack.dup)
 
         return score
       end

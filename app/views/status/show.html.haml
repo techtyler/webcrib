@@ -4,26 +4,15 @@
   = 'Number of Registered Players: ' + number_of_players
 
 %h4
-  = 'Number of Players Signed in: ' + number_of_sessions
+  = 'Number of Players Signed in (Mock): ' + number_of_sessions
 
 %h4
-  = 'Number of Games Played: ' + number_of_games
+  = 'Number of Games Played (Mock): ' + number_of_games
 
-%h4
-  = 'Number of Games Won by User: ' + number_of_wins
+- if current_player
+  %h4
+    = 'Number of Games Won by' + current_player.username +  ' (Mock): ' + number_of_wins
 
--#%form{action:play_path}
--#  %input.btn{type:'submit', value:'New Game'}
-
-
-
-%h3
-  Jquery Fun
-
-%a{href:'http://jquery.com'}
-  JQuery
-
-%script
 
 
 
