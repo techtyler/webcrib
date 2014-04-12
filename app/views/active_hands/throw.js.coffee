@@ -26,26 +26,16 @@ $('#user-score').html("<%= @hand.active_game.p1_score %>")
 $('#peg-sum').html("<%= @hand.peg_sum %>")
 $("#peg-stack").html("<%= raw render_peg_stack( @hand ) %>")
 
+if ("<%= @hand.dealer %>" == 'true')
+  $("#user-crib").html("<%= raw render_crib_hand %>")
+  $("#peg-stack").html("<%= raw render_peg_stack( @hand ) %>")
 
+  #    Remove card that AI pegged
+  $("#ai_card_3").remove()
 
+else
+  $("#ai-crib").html("<%= raw render_crib_hand %>")
 
-#Setup function based on value of hand.dealer
-showDealer = (hand)->
-
-#  TODO: CHECK hand.hand.game_over for TRUE
-  #: If SO (SHOW AN ALERT OR MESSAGE)
-
-  if hand.hand.dealer
-    $("#user-crib").html("<%= raw render_crib_hand %>")
-    $("#peg-stack").html("<%= raw render_peg_stack( @hand ) %>")
-
-#    Remove card that AI pegged
-    $("#ai_card_3").remove()
-
-  else
-    $("#ai-crib").html("<%= raw render_crib_hand %>")
-
-gon.watch('hand', url: 'hand', showDealer )
 
 
 

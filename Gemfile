@@ -16,9 +16,6 @@ gem 'simple_form', '>= 3.0.0rc'
 gem 'haml-rails'
 gem 'high_voltage'
 gem 'bootstrap-sass'
-gem 'gon'
-gem 'rabl'
-
 group :production do
   gem 'thin'
   gem 'rails_on_heroku'

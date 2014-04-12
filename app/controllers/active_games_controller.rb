@@ -15,7 +15,6 @@ class ActiveGamesController < ApplicationController
     end
 
     @hand = @game.active_hand
-    gon.watch.rabl template: 'app/views/active_hands/hand.rabl', as: 'hand'
 
   end
 
@@ -61,8 +60,8 @@ class ActiveGamesController < ApplicationController
   end
 
   def create_game
-                                                                       #TODO: Change this back
-    @game = ActiveGame.new(:player_id => session[:player_id], :p1_score => 60, :p2_score => 100, :num_hands => 1)
+
+    @game = ActiveGame.new(:player_id => session[:player_id], :p1_score => 0, :p2_score => 0, :num_hands => 1)
     create_hand
     session[:game_id] = @game.id
 
