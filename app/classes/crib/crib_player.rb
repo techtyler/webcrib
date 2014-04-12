@@ -32,13 +32,6 @@ module Crib
 
     end
 
-    def accept_card(card)
-
-    end
-
-    def score_cards(cut_card)
-      HandCountingMethods.score_hand(@hand << cut_card, false)
-    end
 
     def start_new_hand(cards)
       cards.sort

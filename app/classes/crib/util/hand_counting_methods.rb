@@ -6,6 +6,44 @@ module Crib
 
     class HandCountingMethods
 
+      def self.score_hand(cards, crib)
+
+        score = 0
+        tmp_flush = HandCountingMethods.flush(cards)
+        if (tmp_flush == 5 || (tmp_flush == 4 && !crib))
+          score += tmp_flush
+        end
+
+        #puts "Score after flush check: " + score.to_s
+        score += HandCountingMethods.knobs(cards)
+        #puts "Score after knobs check: " + score.to_s
+        cards.sort! { |a,b| a.number <=> b.number  }
+
+
+        fif_score,sum_count = HandCountingMethods.fifteens_up(cards, 0, 0)
+        #if (sum(cards) > 25)
+        #  fif_score,sum_count = HandCountingMethods.fifteens_up(cards, 0, 0)
+        #else
+        #  fif_score,sum_count = HandCountingMethods.fifteens(cards)
+        #end
+
+        score += fif_score
+
+        #puts "Score after fifteens check: " + score.to_s
+        tmp_cards, dups = HandCountingMethods.remove_duplicate_cards(cards)
+
+        #puts "Duplicates removed"
+        score += HandCountingMethods.pairs(dups)
+        #puts "Score after pairs check: " + score.to_s
+        score += HandCountingMethods.score_runs(tmp_cards, dups)
+        #puts "Score after runs check: " + score.to_s
+
+        return score, sum_count
+
+      end
+
+      private
+
       def self.flush(cards)
 
         suit = cards.first.suit
@@ -19,7 +57,7 @@ module Crib
           if cards.last.suit == suit
             return cards.size
           else
-            return (-1 + cards.size)
+            return (cards.size - 1)
           end
         end
         return 0
@@ -175,13 +213,12 @@ module Crib
       end
 
       def self.do_cards_make_complete_run(cards)
-        run = cards.size
         (1..cards.size-1).each { |i|
           if (cards[i].number - cards[i-1].number != 1)
-            run = 0
+            return 0
           end
         }
-        run
+        cards.size
       end
 
       def self.score_runs(cards, dups)
@@ -218,9 +255,9 @@ module Crib
             runs += tmp_runs
           else
             tmp_cards = cards.dup
-            tmp_cards.delete(cards[(cards.size - 1)])
+            tmp_cards.delete(cards.last)
             tmp_dups = dups.dup
-            tmp_dups.delete(cards[(cards.size - 1)].number)
+            tmp_dups.delete(cards.last.number)
             runs += HandCountingMethods.score_runs(tmp_cards, tmp_dups)
           end
 
@@ -228,41 +265,7 @@ module Crib
         return runs
       end
 
-      def self.score_hand(cards, crib)
 
-        score = 0
-        tmp_flush = HandCountingMethods.flush(cards)
-        if (tmp_flush == 5 || (tmp_flush == 4 && !crib))
-          score += tmp_flush
-        end
-
-        #puts "Score after flush check: " + score.to_s
-        score += HandCountingMethods.knobs(cards)
-        #puts "Score after knobs check: " + score.to_s
-        cards.sort! { |a,b| a.number <=> b.number  }
-
-
-        fif_score,sum_count = HandCountingMethods.fifteens_up(cards, 0, 0)
-        #if (sum(cards) > 25)
-        #  fif_score,sum_count = HandCountingMethods.fifteens_up(cards, 0, 0)
-        #else
-        #  fif_score,sum_count = HandCountingMethods.fifteens(cards)
-        #end
-
-        score += fif_score
-
-        #puts "Score after fifteens check: " + score.to_s
-        tmp_cards, dups = HandCountingMethods.remove_duplicate_cards(cards)
-
-        #puts "Duplicates removed"
-        score += HandCountingMethods.pairs(dups)
-        #puts "Score after pairs check: " + score.to_s
-        score += HandCountingMethods.score_runs(tmp_cards, dups)
-        #puts "Score after runs check: " + score.to_s
-
-        return score, sum_count
-
-      end
     end
   end
 end

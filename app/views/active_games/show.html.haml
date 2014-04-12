@@ -12,9 +12,12 @@
 
     .span3
       .scores
-        %h3#ai-score= "AI: #{@game.p2_score}"
-        %h3#user-label= "#{current_player.email}:"
-        %h3#user-score= "#{@game.p1_score}"
+        %h5#dealer-label{class: get_dealer_class(@game.active_hand.dealer?)} D
+        %h5#ai-score= "AI: #{@game.p2_score}"
+        %h5#user-label= "#{current_player.email}:"
+        %h5#user-score= "#{@game.p1_score}"
+
+      %ul#game-messages
 
       %form#new-game{action: new_game_path}
         %input.btn{type:'submit', value: 'New Game'}

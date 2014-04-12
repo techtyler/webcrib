@@ -3,8 +3,20 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 
+
+
+#user-hand-area
+{
+  margin-left: 0px;
+  min-height: 100px;
+  float:left;
+}
+#ai-hand-area{
+  min-height: 100px;
+  float:left;
+}
+
 .hand{
-  margin: 25px;
   min-height: 150px;
   float:left;
 
@@ -25,12 +37,9 @@
 }
 
 .player-stack{
-  margin-top: 20px;
+  margin-top: 40px;
 }
 
-.ai-stack{
-  margin-top: -20px;
-}
 .round{
   margin-left: 50px;
 }
@@ -53,29 +62,32 @@
 
   .span2#cut-card{
     min-height: 100px;
-    margin-top: 60px;
+    margin-top: 80px;
     margin-left: 20px;
   }
 
   .span1.peg-sum{
     color: #eee;
     font-size: 28px;
-    margin-top: 70px;
+    margin-top: 90px;
     margin-left: 10px;
    }
 
   .span8#peg-stack{
-    min-height: 150px;
+    min-height: 200px;
     margin-top: 60px;
   }
 }
 
 #decision-form{
-   min-height: 40px;
+  min-height: 40px;
+  margin-left: 0px;
 
   #throw-form {
-    margin-left: 25px;
+    margin-left: 10px;
     margin-top: 30px;
+    margin-bottom: 10px;
+    margin-left: 30px;
 
     .checkbox {
       margin-right: 33px;
@@ -90,6 +102,7 @@
   #peg-form{
     float:left;
     margin-top: 30px;
+
 
     .checkbox{
       margin-right:15px;

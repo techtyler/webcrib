@@ -52,7 +52,20 @@ class ActiveHand < ActiveRecord::Base
   end
 
   def ai_peg_hand
-    return peg_hands[1]
+    if pegging?
+      return peg_hands[1]
+    else
+      return 4;
+    end
+
+  end
+
+  def game_over
+    !active_game
+  end
+
+  def ai_peg_size
+    return ai_peg_hand.size
   end
 
   def peg_round_complete
@@ -71,10 +84,10 @@ class ActiveHand < ActiveRecord::Base
     player_peg = player_full.dup
     ai_peg = ai_hand.dup
     full_peg_stack.each do |card|
-      if player_full.index{|x| x.number == card.number and x.suit == card.suit} != nil
-        player_peg.delete_if {|x| x.number == card.number and x.suit == card.suit}
+      if player_full.index{|x| x.number == card.number && x.suit == card.suit} != nil
+        player_peg.delete_if {|x| x.number == card.number && x.suit == card.suit}
       else
-        ai_peg.delete_if {|x| x.number == card.number and x.suit == card.suit}
+        ai_peg.delete_if {|x| x.number == card.number && x.suit == card.suit}
       end
     end
 
@@ -103,7 +116,7 @@ class ActiveHand < ActiveRecord::Base
 
   def throw(hand1, hand2, crib, cut_card)
 
-    write_attribute(:cut_card, Crib::Util::CardEncoder.convert_card_to_string(cut_card))
+    write_attribute(:cut_card, cut_card.to_s)
     write_attribute(:p1_hand, Crib::Util::CardEncoder.encode_hand(hand1))
     write_attribute(:p2_hand, Crib::Util::CardEncoder.encode_hand(hand2))
     write_attribute(:crib_hand, Crib::Util::CardEncoder.encode_hand(crib))
@@ -125,7 +138,7 @@ class ActiveHand < ActiveRecord::Base
       delimiter = ':'
     end
 
-    stack += delimiter + Crib::Util::CardEncoder.convert_card_to_string(card)
+    stack += delimiter + card.to_s
     card_stack = Crib::Util::CardEncoder.decode_full_stack(stack)
 
     if card_stack.size < 9
@@ -161,5 +174,7 @@ class ActiveHand < ActiveRecord::Base
     write_attribute(:dealer, !read_attribute(:dealer))
 
   end
+
+
 
 end

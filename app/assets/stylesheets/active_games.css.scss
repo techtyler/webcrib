@@ -5,6 +5,7 @@
 
 .gameboard{
   min-height: 800px;
+  padding: 50px;
 
   .span9{
     float: left;
@@ -17,6 +18,21 @@
 
     .scores{
       margin: 20px;
+      float:left;
+      min-width: 100%;
+
+      #dealer-label
+      {
+        float:left;
+        margin-left: -20px;
+
+
+      }
+
+      #dealer-label.user
+      {
+        margin-top: 50px;
+      }
 
       #user-label{
         float: left;

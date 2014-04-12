@@ -10,11 +10,11 @@ module Crib
 
     def initialize_deck
       @cards = []
-      for i in 1..4
-        for j in 1..13
-          @cards << Card.new(j,i)
-        end
-      end
+      (1..4).each { |i|
+        (1..13).each { |j|
+          @cards << Card.new(j, i)
+        }
+      }
       @cards.shuffle!
     end
 
@@ -22,16 +22,14 @@ module Crib
       @cards.pop
     end
 
-    def cut_deck(hand1, hand2)
+    def cut_deck(excluded_cards)
 
 
       initialize_deck
-      excluded_cards = hand1.dup
-      excluded_cards.concat(hand2.dup)
 
-      for tmp in excluded_cards do
-        @cards.delete_if{|x| x.number == tmp.number && x.suit == tmp.suit}
-      end
+      excluded_cards.each { |tmp|
+        @cards.delete_if { |x| x.number == tmp.number && x.suit == tmp.suit }
+      }
 
       #TODO Validate sizing?
       @cards[rand(32) + 4]
@@ -44,7 +42,7 @@ module Crib
       initialize_deck
       hand_1 = []
       hand_2 = []
-      for i in 0..11
+      (0..11).each { |i|
         card = deal_card
 
         if (i % 2 == 0)
@@ -52,7 +50,7 @@ module Crib
         else
           hand_1 << card
         end
-      end
+      }
 
       return hand_1, hand_2
 

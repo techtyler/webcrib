@@ -11,14 +11,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130905183052) do
+ActiveRecord::Schema.define(version: 20140411232017) do
 
   create_table "active_games", force: true do |t|
     t.integer  "player_id"
     t.integer  "p1_score"
     t.integer  "p2_score"
     t.integer  "num_hands"
-    t.string   "workflow_state"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -42,6 +41,28 @@ ActiveRecord::Schema.define(version: 20130905183052) do
     t.string   "username"
     t.string   "email"
     t.string   "password_digest"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "game_stats", force: true do |t|
+    t.integer  "crib_player_id"
+    t.integer  "ai_id"
+    t.integer  "user_score"
+    t.integer  "ai_score"
+    t.integer  "hands_played"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "player_stats", force: true do |t|
+    t.integer  "crib_player_id"
+    t.integer  "games_played"
+    t.integer  "games_won"
+    t.integer  "skunks"
+    t.string   "best_hand"
+    t.string   "best_peg"
+    t.integer  "lowest_ai_score"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

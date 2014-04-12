@@ -1,17 +1,17 @@
 %h1 WebCrib Status
 
 %h4
-  = 'Number of Registered Players: ' + number_of_players
+  = 'Number of Registered Players: ' + number_of_players.to_s
 
 %h4
-  = 'Number of Players Signed in (Mock): ' + number_of_sessions
+  = 'Number of Players Signed in: ' + number_of_sessions.to_s
 
 %h4
-  = 'Number of Games Played (Mock): ' + number_of_games
+  = 'Number of Games Played: ' + number_of_games.to_s
 
 - if current_player
   %h4
-    = 'Number of Games Won by' + current_player.username +  ' (Mock): ' + number_of_wins
+    = 'Number of Games Won by ' + current_player.username +  ' : ' + number_of_wins.to_s
 
 
 

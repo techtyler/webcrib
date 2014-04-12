@@ -1,4 +1,6 @@
 
+
+
 #remove unnecessary throw form
 $('#throw-form').remove()
 #Show peg form
@@ -13,9 +15,9 @@ $('#ai_card_5').remove()
 $('#user-hand').html("<%= raw render_hand(@hand.player_hand, false, 'p_card_', '')  %>")
 
 #Toggle span classes so that labels will line up correctly and cards aren't put below any others
-$('#user-hand').toggleClass('span7 span5')
+$('#user-hand').toggleClass('span7 span6')
 $('#user-crib').toggleClass('span4 span6')
-$('#ai-hand').toggleClass('span7 span5')
+$('#ai-hand').toggleClass('span7 span6')
 $('#ai-crib').toggleClass('span4 span6')
 
 $('#ai-score').html("AI: <%= @hand.active_game.p2_score %> ")
@@ -29,6 +31,9 @@ $("#peg-stack").html("<%= raw render_peg_stack( @hand ) %>")
 
 #Setup function based on value of hand.dealer
 showDealer = (hand)->
+
+#  TODO: CHECK hand.hand.game_over for TRUE
+  #: If SO (SHOW AN ALERT OR MESSAGE)
 
   if hand.hand.dealer
     $("#user-crib").html("<%= raw render_crib_hand %>")

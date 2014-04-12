@@ -1,0 +1,15 @@
+-if active_hand.dealt?
+  %form#throw-form{ action: throw_path, 'data-remote' => true }
+    -for i in 1..6
+      %label.checkbox.inline{id: "throw_lbl_#{i}"}
+        = i.to_s
+        = check_box_tag "cards[]", (i-1).to_s
+    %input.btn{type:'submit', value:'Throw Cards'}
+
+-if !active_hand.hands_counted?
+  %form#peg-form{style: if active_hand.dealt? then 'display:none;' else '' end, action: peg_path, 'data-remote' => true}
+    -for i in 1..user_peg_size
+      %label.checkbox.inline{id: "peg_lbl_#{i}"}
+        = i.to_s
+        = radio_button_tag "pegs[]", (i-1).to_s
+    %input.btn{type:'submit', value:'Peg Card'}

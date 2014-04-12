@@ -3,16 +3,16 @@ module Crib
     class CardEncoder
 
       def self.decode_stack_by_round(stack)
-        if !(stack.include?('|'))
+        unless stack.include?('|')
           return [decode_full_stack(stack)]
         end
 
         rounds = stack.split(/[|]/)
         r_stack = []
 
-        for i in 0..rounds.size-1
+        (0..rounds.size-1).each { |i|
           r_stack[i] = decode_hand(rounds[i])
-        end
+        }
 
         return r_stack
 
@@ -31,7 +31,7 @@ module Crib
 
       def self.decode_current_stack(stack)
 
-        if !(stack.include?('|'))
+        unless stack.include?('|')
           return decode_full_stack(stack)
         end
 
@@ -43,7 +43,7 @@ module Crib
       def self.encode_hand(hand)
         cards = []
         hand.each do |c|
-          cards << Crib::Util::CardEncoder.convert_card_to_string(c)
+          cards << c.to_s
         end
         return cards.join(':')
 
@@ -69,9 +69,7 @@ module Crib
         end
       end
 
-      def self.convert_card_to_string(card)
-        return convert_number_to_string(card.number) + convert_suit_to_string(card.suit)
-      end
+
 
       def self.convert_string_to_number(string_num)
         case (string_num)
@@ -88,23 +86,7 @@ module Crib
         end
       end
 
-      def self.convert_number_to_string(number)
 
-        case (number)
-          when 1
-            return 'A'
-          when 11
-            return 'J'
-          when 12
-            return 'Q'
-          when 13
-            return 'K'
-          else
-            if (number != nil)
-              return number.to_s
-            end
-        end
-      end
 
       def self.convert_string_to_suit(string_suit)
 
@@ -117,25 +99,14 @@ module Crib
             return 3
           when 'S'
             return 4
-        end
-
-      end
-
-
-      def self.convert_suit_to_string(suit)
-        case (suit)
-          when 1
-            return 'C'
-          when 2
-            return 'H'
-          when 3
-            return 'D'
-          when 4
-            return 'S'
           else
-            return nil       #probably redundant
+            return nil
         end
+
       end
+
+
+
     end
   end
 end

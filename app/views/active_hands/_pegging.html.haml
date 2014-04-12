@@ -1,0 +1,12 @@
+.span2#cut-card
+  - if active_hand.dealt?
+    != render_card_back('deck', 0, 100)
+  - else
+    != render_whole_card(active_hand.cut_card_decoded, '', 100, '')
+.span1.peg-sum
+  %h3#peg-sum
+    -if active_hand.pegging?
+      = active_hand.peg_sum
+.span8#peg-stack
+  - if active_hand.pegging? # cant move this up because we want these divs present with a min_height
+    != render_peg_stack(active_hand)

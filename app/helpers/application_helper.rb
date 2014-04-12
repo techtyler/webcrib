@@ -1,7 +1,6 @@
 module ApplicationHelper
 
-  @@card_height = 100
-  @@stack_height = 100
+  CARD_HEIGHT = 100
 
   def is_active?(page)
     'active' if current_page?(page)
@@ -59,7 +58,7 @@ module ApplicationHelper
       tmp_clazz = if player then 'player-stack ' else 'ai-stack ' end
       tmp_clazz += clazz
 
-      val += render_whole_card(card, id + i.to_s, @@card_height, tmp_clazz)
+      val += render_whole_card(card, id + i.to_s, CARD_HEIGHT, tmp_clazz)
     end
 
     return val
@@ -78,14 +77,14 @@ module ApplicationHelper
     (0..hand.size-1).each { |i|
       id = id_prefix + i.to_s
       if back
-        val = val + render_card_back(id, @@card_height, clazz)
+        val = val + render_card_back(id, CARD_HEIGHT, clazz)
       else
-        val = val + render_whole_card(hand[i], id, @@card_height, clazz)
+        val = val + render_whole_card(hand[i], id, CARD_HEIGHT, clazz)
       end
 
     }
 
-    return val;
+    return val
   end
 
 
@@ -95,7 +94,7 @@ module ApplicationHelper
     if !card
       filename = 'svg/cards/Blue_Back.svg'
     else
-      filename = 'svg/cards/' + Crib::Util::CardEncoder.convert_card_to_string(card)  + '.svg'
+      filename = 'svg/cards/' + card.filename  + '.svg'
     end
 
     return "<div class='" + clazz + " card' id='#{id}' ><embed style='height: #{height}px;' src=" + url_to_asset(filename) + '/></div>'

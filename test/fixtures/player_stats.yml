@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  [games_played: 1
+  games_won: 1
+  skunks: 1
+  best_hand: MyString
+  best_peg: MyString
+  lowest_ai_score: 
+
+two:
+  [games_played: 1
+  games_won: 1
+  skunks: 1
+  best_hand: MyString
+  best_peg: MyString
+  lowest_ai_score: 

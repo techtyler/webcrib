@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  [crib_player_id: 1
+  ai_id: 1
+  user_score: 1
+  ai_score: 1
+  hands_played: 
+
+two:
+  [crib_player_id: 1
+  ai_id: 1
+  user_score: 1
+  ai_score: 1
+  hands_played: 

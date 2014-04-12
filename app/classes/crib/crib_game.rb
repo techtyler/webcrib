@@ -1,0 +1,2 @@
+class CribGame
+end

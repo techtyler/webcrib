@@ -1,5 +1,8 @@
 Webcrib::Application.routes.draw do
 
+  get "player_stats/summary"
+  get "game_stats/summary"
+  get "game_stats/add"
   get 'play' => 'active_games#show', :as => 'play'
 
   get 'log_out' => 'sessions#destroy', :as => 'log_out'
@@ -8,7 +11,7 @@ Webcrib::Application.routes.draw do
 
   get 'throw' => 'active_hands#throw', :as => 'throw'
 
-  get 'peg' => 'active_hands#peg', :as => 'peg'
+  get 'peg' => 'pegging#peg', :as => 'peg'
   get 'hand' => 'active_hands#hand', :as => 'hand'
 
   get 'new_game' => 'active_games#new_game', :as => 'new_game'
@@ -18,6 +21,7 @@ Webcrib::Application.routes.draw do
   get 'home' => 'status#show', :as => 'home'
 
   root :to => 'status#show'
+
 
   resources :active_games
   resources :active_hands
